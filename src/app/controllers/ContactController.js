@@ -11,8 +11,9 @@ const errors = {
 };
 
 class ContactController {
-  async index(_, response) {
-    const contacts = await ContactsRepository.findAll();
+  async index(request, response) {
+    const { orderBy } = request.query;
+    const contacts = await ContactsRepository.findAll({ orderBy });
 
     response.json(contacts);
   }
