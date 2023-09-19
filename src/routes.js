@@ -1,7 +1,16 @@
-const routes = (app) => {
-  app.get('/', (request, response) => {
-    response.send('Hello world!');
-  });
-};
+const { Router } = require('express');
+const ContactController = require('./app/controllers/ContactController');
+// const middlewares = require('./middlewares');
 
-export default routes;
+const router = Router();
+
+// middlewares
+// router.use(middlewares.globalMiddleware);
+
+router.get('/contacts', ContactController.index);
+router.get('/contacts/:id', ContactController.show);
+router.delete('/contacts/:id', ContactController.delete);
+router.post('/contacts', ContactController.store);
+router.put('/contacts/:id', ContactController.update);
+
+module.exports = router;

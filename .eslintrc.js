@@ -11,5 +11,9 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
+    'class-methods-use-this': 'off',
+    'consistent-return': 'off',
+    // eslint-disable-next-line quote-props
+    'camelcase': 'off',
   },
 };
