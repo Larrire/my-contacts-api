@@ -2,30 +2,45 @@ const db = require('../../database');
 
 class ContactsReposory {
   async findAll({ orderBy = 'ASC' }) {
-    const fields = 'id, name, email, phone, category_id';
     const orderDirection = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
 
     const rows = await db.query(`
-      SELECT ${fields} FROM contacts ORDER BY name ${orderDirection};
+      SELECT
+        contacts.id, contacts.name, email, phone, category_id,
+        categories.name AS category_name
+      FROM
+        contacts
+      LEFT JOIN
+        categories
+      ON
+        contacts.category_id = categories.id
+      ORDER BY
+        contacts.name ${orderDirection};
     `);
 
     return rows;
   }
 
   async findById(id) {
-    const fields = 'id, name, email, phone, category_id';
     const [row] = await db.query(`
-      SELECT ${fields} FROM contacts
-      WHERE id = $1
+      SELECT
+        contacts.id, contacts.name, email, phone, category_id,
+        categories.name AS category_name
+      FROM
+        contacts
+      LEFT JOIN
+        categories
+      ON
+        contacts.category_id = categories.id
+      WHERE contacts.id = $1
     `, [id]);
 
     return row;
   }
 
   async findByEmail(email) {
-    const fields = 'id, name, email, phone, category_id';
     const [contact] = await db.query(`
-      SELECT ${fields} FROM contacts
+      SELECT id, name, email FROM contacts
       WHERE email = $1
     `, [email]);
 
