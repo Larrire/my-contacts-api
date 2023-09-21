@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     'class-methods-use-this': 'off',
     'consistent-return': 'off',
+    'no-unused-vars': ['errors', { argsIgnorePattern: 'next' }],
     // eslint-disable-next-line quote-props
     'camelcase': 'off',
   },
